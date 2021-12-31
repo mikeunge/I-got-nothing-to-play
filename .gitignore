@@ -1,8 +1,5 @@
-
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
+.env
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -18,3 +15,7 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+###> docker/mariadb ###
+db_data/
+###< docker/mariadb ###
