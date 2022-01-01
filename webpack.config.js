@@ -55,6 +55,13 @@ Encore
         config.corejs = 3;
     })
 
+	.enablePostCssLoader((options) => {
+		// new option outlined here https://webpack.js.org/loaders/postcss-loader/
+		options.postcssOptions = {
+		  config: './postcss.config.js',
+		}
+	})
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
