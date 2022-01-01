@@ -1,0 +1,68 @@
+<nav id="navigation" class="bg-white shadow-lg px-6 py-6">
+	<div class="flex justify-between">
+		<a href="/" class="flex items-center">
+			<img src="/img/logo.png" alt="LOGO" class="h-8 w-auto mr-2">
+		</a>
+		<div class="hidden md:flex items-center">
+			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
+				<a href="/" class="">Home</a>
+			</div>
+			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
+				<a href="/account/login" class="">Login</a>
+			</div>
+			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
+				<a href="/account/create" class="">Sign Up</a>
+			</div>
+		</div>
+
+		<!-- Mobile menu button -->
+		<div class="md:hidden flex items-center">
+			<button class="outline-none" onclick="toggleNav()">
+				<svg class="w-6 h-6 text-gray-500"
+					x-show="!showMenu"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					viewBox="0 0 24 24"
+					stroke="currentColor">
+					<path d="M4 6h16M4 12h16M4 18h16"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+	<!-- mobile menu -->
+	<div id="mobile-menu" class="hidden w-full h-screen">
+		<ul class="flex flex-col h-screen py-20">
+			<li class="flex justify-center py-8">
+				<a href="/" class="text-xl transition duration-300">Home</a>
+			</li>
+			<li class="flex justify-center py-8">
+				<a href="/account/login" class="text-xl transition duration-300">Login</a>
+			</li>
+			<li class="flex justify-center py-8">
+				<a href="/account/create" class="text-xl transition duration-300">Sign Up</a>
+			</li>
+		</ul>
+	</div>
+	<script>
+		let isVisible = false;
+		const toggleNav = (() => {
+			// Make the mobile menu visible and hide the main-container as well as the footer.
+			// Container and footer are both defined in the layouts.master file.
+			isVisible = !isVisible;
+			document.getElementById("mobile-menu").classList.toggle("hidden");
+			document.getElementById("main-container").classList.toggle("hidden");
+			document.getElementById("footer").classList.toggle("hidden");
+		});
+
+		// Prevent the navbar from still existing when the switch to the "full-screen-bar" happens.
+		// We check if the width is bigger or equal 768 and the navbar is shown (isVisible),
+		// if this is the case, we trigger the toggleNav function so the navbar closes and all elemnts are shown again.
+		window.addEventListener('resize', () => {
+			if (window.innerWidth >= 768 && isVisible) {
+				toggleNav();
+			};
+		});
+	</script>
+</nav>
