@@ -27,7 +27,7 @@
 				<input type="password" name="registration_form[plainPassword]" class="border-2 border-gray-200 active:border-gray-400" autocomplete="new-password" required>
 			</div>
 
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+			{{ form_row(form._csrf_token) }}
 
 			<div class="pt-4">
 				<button class="p-2 px-8 text-white border-2 border-purple-700 rounded-lg bg-purple-600 hover:bg-purple-700" type="submit">Register</button>
