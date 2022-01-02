@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nothing to play?{% endblock %}
+
+{% set show_navbar = true %}
+
+{% block body %}
+
+<div class="pt-24">
+	<div class="md:text-6xl text-3xl antialiased">
+		Got nothing to play?
+	</div>
+	<div class="md:text-3xl text-xl antialiased pt-2">
+		Then you are at the right place!
+		We help <a href="/register" class="hover:bg-purple-700 hover:text-white hover:transition-colors"><b>You</b></a> organize all your games.
+	</div>
+<div>
+
+{# <div class="text-2xl">
+	{% if app.user %}
+		Welcome back!
+	{% endif %}
+</div> #}
+
+{% endblock %}

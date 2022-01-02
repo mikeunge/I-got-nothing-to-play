@@ -27,12 +27,12 @@ services:
     container_name: "${APP_NAME}-db"
     restart: always
     ports:
-      - "${DB_PORT}:3306"
+      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
-      MYSQL_DATABASE: "${DB_DATABASE}"
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MARIADB_USER: "${DB_USERNAME}"
+      MARIADB_PASSWORD: "${DB_PASSWORD}"
+      MARIADB_DATABASE: "${DB_DATABASE}"
     volumes:
       - ./db_data:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -40,6 +40,17 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=$$DB_ROOT_PASSWORD
       interval: 5s
       retries: 5
+    networks:
+      - no_games_hub
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: "${APP_NAME}-pma"
+    ports:
+      - 8080:80 
+    environment:
+      PMA_HOST: db_server
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
     networks:
       - no_games_hub
 

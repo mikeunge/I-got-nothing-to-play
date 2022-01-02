@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Pipe bin/console commands directly into the docker container.
+
+if [ -f .env ]; then
+  export $(cat .env | grep -v '#' | awk '/=/ {print $1}')
+fi
+
+args="$@"
+command="php bin/console $args"
+echo "$command"
+IFS='"' read appname <<< $APP_NAME
+docker exec -it $appname-server bash -c "/bin/bash -c \"$command\""

@@ -10,3 +10,10 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+window.closeErrorMessage = function() {
+	const errorMsg = document.getElementById('errorMessage');
+	if (errorMsg) {
+		errorMsg.classList.toggle('hidden');
+	}
+}

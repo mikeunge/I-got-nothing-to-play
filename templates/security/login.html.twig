@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login | IGN2P{% endblock %}
+
+{% block body %}
+<div>
+	{% if error %}
+		<div id="errorMessage" class="flex justify-center">
+			<div class="flex justify-between p-4 top-0 bg-red-400 text-white md:w-2/3 w-screen -mt-4 rounded-b-md">
+				<div>{{ error }}</div>
+				<button class="material-icons" onclick="closeErrorMessage();">close</button>
+			</div>
+		</div>
+	{% endif %}
+	<form method="post">
+		<div class="flex flex-col h-screen justify-center content-center items-center -mt-24">
+			<a href="/" class="flex justify-center items-center">
+				<img src="/images/icon.png" alt="LOGO" class="w-12">
+			</a>
+			<div class="text-4xl md:text-6xl">Login</div>
+			<div class="w-full md:w-auto flex flex-col">
+				<div class="text-lg pt-8">Email</div>
+				<input type="email" value="{{ last_username }}" name="email" class="border-2 border-gray-200 active:border-gray-400" autocomplete="email" required autofocus>
+			</div>
+			<div class="w-full md:w-auto flex flex-col">
+				<div class="text-lg pt-4">Password</div>
+				<input type="password" name="password" class="border-2 border-gray-200 active:border-gray-400" autocomplete="current-password" required>
+			</div>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+			<label class="p-2">
+				<input type="checkbox" name="_remember_me"> Remember me
+			</label>
+			<button class="p-2 px-8 text-white border-2 border-purple-700 rounded-lg bg-purple-600 hover:bg-purple-700" type="submit">Login</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

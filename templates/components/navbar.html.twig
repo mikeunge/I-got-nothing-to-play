@@ -1,18 +1,24 @@
-<nav id="navigation" class="bg-white shadow-lg px-6 py-6">
+<nav id="navigation" class="bg-white shadow-lg px-16 py-6">
 	<div class="flex justify-between">
 		<a href="/" class="flex items-center">
-			<img src="/img/logo.png" alt="LOGO" class="h-8 w-auto mr-2">
+			<img src="/images/logo.png" alt="LOGO" class="h-8 w-auto mr-2">
 		</a>
 		<div class="hidden md:flex items-center">
+		{% if app.user %}
 			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
-				<a href="/" class="">Home</a>
+				<a href="/games" class="hover:duration-150 hover:scale-105 hover:text-purple-700">Games</a>
 			</div>
 			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
-				<a href="/account/login" class="">Login</a>
+				<a href="/logout" class="hover:duration-150 hover:scale-105 hover:text-purple-700">Logout</a>
+			</div>
+		{% else %}
+			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
+				<a href="/login" class="hover:duration-150 hover:scale-105 hover:text-purple-700">Login</a>
 			</div>
 			<div class="lg:px-4 px-2 text-lg lg:text-xl antialiased">
-				<a href="/account/create" class="">Sign Up</a>
+				<a href="/register" class="p-2 text-white border-2 border-purple-700 rounded-lg bg-purple-600 hover:bg-purple-700">Sign Up</a>
 			</div>
+			{% endif %}
 		</div>
 
 		<!-- Mobile menu button -->
@@ -34,15 +40,21 @@
 	<!-- mobile menu -->
 	<div id="mobile-menu" class="hidden w-full h-screen">
 		<ul class="flex flex-col h-screen py-20">
+			{% if app.user %}
 			<li class="flex justify-center py-8">
-				<a href="/" class="text-xl transition duration-300">Home</a>
+				<a href="/games" class="text-xl transition duration-300">Games</a>
 			</li>
 			<li class="flex justify-center py-8">
-				<a href="/account/login" class="text-xl transition duration-300">Login</a>
+				<a href="/logout" class="text-xl transition duration-300">Logout</a>
+			</li>
+			{% else %}
+			<li class="flex justify-center py-8">
+				<a href="/login" class="text-xl transition duration-300">Login</a>
 			</li>
 			<li class="flex justify-center py-8">
-				<a href="/account/create" class="text-xl transition duration-300">Sign Up</a>
+				<a href="/register" class="text-xl transition duration-300">Sign Up</a>
 			</li>
+			{% endif %}
 		</ul>
 	</div>
 	<script>
