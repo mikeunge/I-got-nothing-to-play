@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Games | IGN2P{% endblock %}
+
+{% block body %}
+	<div class="flex justify-between">
+		<div class="text-4xl align-text-bottom">Game Library</div>
+		<div class="align-text-bottom">Search</div>
+		<a class="align-text-bottom" href="{{ path('games_new') }}">Create new</a>
+	</div>
+
+	<div class="pt-8">
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Image</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for game in games %}
+				<tr>
+					<td>{{ game.title }}</td>
+					<td>{{ game.description }}</td>
+					<td>{{ game.image }}</td>
+					<td>
+						<a href="{{ path('games_show', {'id': game.id}) }}">show</a>
+						<a href="{{ path('games_edit', {'id': game.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
