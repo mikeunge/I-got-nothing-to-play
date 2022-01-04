@@ -3,40 +3,50 @@
 {% block title %}Games | IGN2P{% endblock %}
 
 {% block body %}
-	<div class="flex justify-between">
-		<div class="text-4xl align-text-bottom">Game Library</div>
-		<div class="align-text-bottom">Search</div>
-		<a class="align-text-bottom" href="{{ path('games_new') }}">Create new</a>
+
+	<div class="flex flex-row justify-between border-b-2 pb-4 py-2 px-4">
+		<a href="{{ path('homepage') }}">
+			<img src="/images/logo.png" alt="LOGO" class="h-8 w-auto mr-2">
+		</a>
+		<div class="">Search</div>
+		<a class="text-purple-700 material-icons md:text-4xl text-3xl" href="{{ path('games_new') }}">add_circle</a>
+	</div>
+
+	<div class="flex justify-center md:justify-start text-4xl pt-4">
+		Your Library
 	</div>
 
 	<div class="pt-8">
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Description</th>
-					<th>Image</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for game in games %}
-				<tr>
-					<td>{{ game.title }}</td>
-					<td>{{ game.description }}</td>
-					<td>{{ game.image }}</td>
-					<td>
-						<a href="{{ path('games_show', {'id': game.id}) }}">show</a>
-						<a href="{{ path('games_edit', {'id': game.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="5">no records found</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		{% if games %}	
+			<div class="grid gap-4 grid-cols-1 md:grid-cols-3 h-1/3">
+				{% for game in games %}
+				<div class="flex flex-col w-full border-2 border-gray-100 rounded-xl shadow-xl">
+					<a href="{{ path('games_show', {'id': game.id}) }}">
+						<img class="relative object-cover w-full rounded-t-xl" src="{{ game.image }}" alt="Image not found" />
+					</a>
+					<div class="p-4">
+						<div class="flex flex-row justify-between">
+							<a href="{{ path('games_show', {'id': game.id}) }}">
+								<div class="text-2xl">
+									{{ game.title }}
+								</div>
+							</a>
+							<div class="text-gray-600 mt-1.5">
+								<a class="material-icons pr-2 hover:scale-110" href="{{ path('games_show', {'id': game.id}) }}">open_in_new</a>
+							</div>
+						</div>
+						<div class="py-2 pt-4 text-gray-600 font-light">
+							{{ game.description }}
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="flex justify-center h-screen">
+				No records found
+			</div>
+		{% endif %}
 	</div>
 
 {% endblock %}
