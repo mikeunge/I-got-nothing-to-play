@@ -11,15 +11,41 @@
 		<label class="relative block">
 			<span class="sr-only">Search</span>
 			<span class="absolute inset-y-0 left-0 flex items-center pl-2">
-				<svg class="h-5 w-5 fill-gray-300" viewBox="0 0 20 20"></svg>
+				<div class="material-icons font-light text-gray-400 -mt-1">search</div>
 			</span>
 			<input class="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-purple-300 focus:ring-purple-500 focus:ring-1 sm:text-sm" placeholder="Search for games..." type="text" name="search"/>
 		</label>
 		<a class="btn" href="{{ path('games_new') }}">Add Game</a>
 	</div>
 
-	<div class="flex justify-center md:justify-start text-4xl pt-4">
-		Your Library
+	<div class="flex justify-start px-4 pt-4">
+		<div class="text-4xl">Your Library</div>
+		<button onclick="openModal();" class="pl-4 mt-4 text-gray-600 font-thin link">Import Games</button>
+	</div>
+
+	<div class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto pt-20 h-full w-full" id="import">
+		<div class="flex justify-center mt-8">
+			<div class="max-w-2xl rounded-lg shadow-xl bg-gray-50">
+				<div class="m-4">
+					<div class="flex justify-between pb-2">
+						<label class="inline-block mb-2 text-gray-500">File Upload</label>
+						<button onclick="closeModal();" class="material-icons text-gray-500">close</button>
+					</div>
+					<div class="flex items-center justify-center w-full">
+						<label class="flex flex-col w-full h-32 border-4 border-purple-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+							<div class="flex flex-col items-center justify-center pt-7">
+								<div class="material-icons text-gray-400 w-8 h-8 group-hover:text-gray-600">cloud_upload</div>
+								<p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">Drag file or click me</p>
+							</div>
+							<input type="file" class="opacity-0" />
+						</label>
+					</div>
+				</div>
+				<div class="flex justify-center p-2">
+					<button onclick="closeModal();" class="w-full px-4 py-2 text-white bg-purple-500 rounded shadow-xl">Upload</button>
+				</div>
+			</div>
+		</div> 
 	</div>
 
 	<div class="pt-8">
@@ -33,7 +59,7 @@
 				{% for game in games %}
 				<div class="flex flex-col w-full h-full md:h-3/4 border-2 border-gray-100 rounded-xl shadow-xl">
 					<a class="h-1/2" href="{{ path('games_show', {'id': game.id}) }}">
-						<img class="relative object-cover w-full h-full rounded-t-xl" src="{{ game.image }}" alt="Image not found" />
+						<img class="object-cover w-full h-full rounded-t-xl" src="{{ game.image }}" alt="Image not found" />
 					</a>
 					<div class="p-4">
 						<div class="flex flex-row justify-between">
@@ -43,10 +69,10 @@
 								</div>
 							</a>
 							<div class="text-gray-600 mt-1.5">
-								<a class="material-icons pr-2 hover:scale-110" href="{{ path('games_show', {'id': game.id}) }}">open_in_new</a>
+								<a class="material-icons pr-2 link" href="{{ path('games_show', {'id': game.id}) }}">open_in_new</a>
 							</div>
 						</div>
-						<div class="game-description py-2 pt-4 text-gray-600 font-light break-words">
+						<div class="game-description pt-2 pb-6 text-gray-600 font-light break-words">
 							{{ game.description }}
 						</div>
 					</div>
@@ -74,9 +100,10 @@
 
 	// Check for the screen size and adjust the textLength (textSize).
 	const getTextSize = () => {
+		// TODO: is broken
 		// define the maxLength (-of the text) and the screenAndTextSizes.
 		// the screenAndTextSizes array maps the MAX screen size with the text length to cut.
-		let maxLength = 600;
+		let maxLength = 250;
 		const screenAndTextSizes = [ [640, 300], [768, 250], [1024, 250], [1280, 300], [1536, 400] ];
 		for (let sizes of screenAndTextSizes) {
 			if (window.innerWidth <= sizes[0]) {
@@ -97,6 +124,16 @@
 			cutDescription(descriptions, getTextSize());
 		});
 	}
+
+
+    const modal = document.getElementById("import");
+    const openModal = () => {
+		modal.style.display = "block";
+    }
+   const closeModal = () => {
+		modal.style.display = "none";
+    }
+
 
 	</script>
 
