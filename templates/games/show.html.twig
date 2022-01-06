@@ -1,34 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Games{% endblock %}
+{% block title %}{{ game.title }} | IGN2P{% endblock %}
 
 {% block body %}
-    <h1>Games</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ game.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ game.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ game.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ game.image }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('games_index') }}">back to list</a>
-
-    <a href="{{ path('games_edit', {'id': game.id}) }}">edit</a>
-
-    {{ include('games/_delete_form.html.twig') }}
+	<div class="flex flex-row justify-between border-b-2 pb-4 py-2 px-4">
+		<a href="{{ path('homepage') }}">
+			<img src="{{ asset('/images/logo.png') }}" alt="LOGO" class="h-8 w-auto mr-2">
+		</a>
+		<a class="btn" href="{{ path('games_index') }}">Take me back</a>
+	</div>
+	<div class="">
+		<div class="relative p-0 m-0 w-full h-auto overflow-hidden">
+			<img class="relative object-fit w-full h-full rounded-xl" src="{{ game.image }}" alt="Image not found" />
+		</div>
+		<div class="absolut top-0 left-0 w-screen">
+		</div>
+		<div class="flex flex-row justify-between">
+			<div class="text-4xl pt-4">
+				{{ game.title }}
+			</div>
+			<div class="flex flex-row ml-4 mt-6">
+				<a class="material-icons link" href="{{ path('games_edit', {'id': game.id}) }}">edit</a>
+				<div class="link">
+					{{ include('games/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+		<div class="py-8">
+			<div class="text-2xl pb-2">Description:</div>
+			<div class="text-gray-600 font-light">
+				{{ game.description }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

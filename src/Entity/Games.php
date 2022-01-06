@@ -39,6 +39,11 @@ class Games
         $this->plattform = new ArrayCollection();
     }
 
+	public function __toString()
+    {
+        return $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
