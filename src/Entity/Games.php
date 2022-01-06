@@ -21,7 +21,7 @@ class Games
     #[ORM\Column(type: 'text')]
     private $description;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'string', length: 512)]
     private $image;
 
     #[ORM\ManyToMany(targetEntity: Genres::class, inversedBy: 'games')]
