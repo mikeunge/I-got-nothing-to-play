@@ -1,35 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Plattforms index{% endblock %}
+{% block title %}Plattforms | IGN2P{% endblock %}
 
 {% block body %}
-    <h1>Plattforms index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for plattform in plattforms %}
-            <tr>
-                <td>{{ plattform.id }}</td>
-                <td>{{ plattform.name }}</td>
-                <td>
-                    <a href="{{ path('plattforms_show', {'id': plattform.id}) }}">show</a>
-                    <a href="{{ path('plattforms_edit', {'id': plattform.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('plattforms_new') }}">Create new</a>
+	{% include('components/table.html.twig') with {component_title: 'Plattforms', components: plattforms} %}
 {% endblock %}

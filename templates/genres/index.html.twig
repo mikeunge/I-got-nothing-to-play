@@ -1,35 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Genres index{% endblock %}
+{% block title %}Genres | IGN2P{% endblock %}
 
 {% block body %}
-    <h1>Genres index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for genre in genres %}
-            <tr>
-                <td>{{ genre.id }}</td>
-                <td>{{ genre.name }}</td>
-                <td>
-                    <a href="{{ path('genres_show', {'id': genre.id}) }}">show</a>
-                    <a href="{{ path('genres_edit', {'id': genre.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('genres_new') }}">Create new</a>
+	{% include('components/table.html.twig') with {component_title: 'Genres', components: genres} %}
 {% endblock %}

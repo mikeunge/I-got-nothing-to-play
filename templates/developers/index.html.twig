@@ -1,35 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Developers index{% endblock %}
+{% block title %}Developers | IGN2P{% endblock %}
 
 {% block body %}
-    <h1>Developers index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for developer in developers %}
-            <tr>
-                <td>{{ developer.id }}</td>
-                <td>{{ developer.name }}</td>
-                <td>
-                    <a href="{{ path('developers_show', {'id': developer.id}) }}">show</a>
-                    <a href="{{ path('developers_edit', {'id': developer.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('developers_new') }}">Create new</a>
+	{% include('components/table.html.twig') with {component_title: 'Development-Studios', components: developers} %}
 {% endblock %}

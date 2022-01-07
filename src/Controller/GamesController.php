@@ -6,6 +6,7 @@ use App\Entity\Games;
 use App\Form\GamesType;
 use App\Repository\GamesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class GamesController extends AbstractController
 {
     #[Route('/', name: 'games_index', methods: ['GET'])]
-    public function index(GamesRepository $gamesRepository): Response
+    public function index(Request $request, GamesRepository $gamesRepository): Response
     {
-        return $this->render('games/index.html.twig', [
-            'games' => $gamesRepository->findAll(),
-        ]);
+		/**
+		 * Check if we recieve any search query.
+		 * If so, we query the database with the given search term and return the data.
+		 * Else, we return the template with ALL the games.
+		 */
+		$search = $request->query->get('search');
+		if ($search) {
+			return $this->render('games/index.html.twig', [
+				'games' => $gamesRepository->findByTitle($search),
+				'search' => true,
+				'searchString' => $search,
+			]);
+		} else {
+			return $this->render('games/index.html.twig', [
+				'games' => $gamesRepository->findAll(),
+				'search' => false,
+				'searchString' => '',
+			]);
+		}
     }
 
     #[Route('/new', name: 'games_new', methods: ['GET', 'POST'])]
