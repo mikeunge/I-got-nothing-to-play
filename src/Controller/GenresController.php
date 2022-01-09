@@ -30,6 +30,9 @@ class GenresController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+			// get the new genre name, remove white space, join with '-'
+			$genre->setName(implode('-', explode(' ', $genre->getName())));
+
             $entityManager->persist($genre);
             $entityManager->flush();
 

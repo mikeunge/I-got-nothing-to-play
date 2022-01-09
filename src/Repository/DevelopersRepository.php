@@ -19,6 +19,26 @@ class DevelopersRepository extends ServiceEntityRepository
         parent::__construct($registry, Developers::class);
     }
 
+    public function findByName($value)
+    {
+		return $this->createQueryBuilder('d')
+			->where('upper(d.name) = upper(:name)')
+			->setParameter('name', $value)
+			->getQuery()
+			->getResult()
+		;
+	}
+
+    public function findLikeName($value)
+    {
+		return $this->createQueryBuilder('d')
+			->where('upper(d.name) LIKE upper(:name)')
+			->setParameter('name', '%' . $value . '%')
+			->getQuery()
+			->getResult()
+		;
+	}
+
     // /**
     //  * @return Developers[] Returns an array of Developers objects
     //  */

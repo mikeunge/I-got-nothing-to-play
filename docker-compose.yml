@@ -43,16 +43,6 @@ services:
     networks:
       - no_games_hub
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: "${APP_NAME}-pma"
-    ports:
-      - 8080:80 
-    environment:
-      PMA_HOST: db_server
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-    networks:
-      - no_games_hub
 
 volumes:
   db_data:

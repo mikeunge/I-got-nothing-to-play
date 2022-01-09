@@ -19,6 +19,26 @@ class PlattformsRepository extends ServiceEntityRepository
         parent::__construct($registry, Plattforms::class);
     }
 
+    public function findByName($value)
+    {
+		return $this->createQueryBuilder('p')
+			->where('upper(p.name) = upper(:name)')
+			->setParameter('name', $value)
+			->getQuery()
+			->getResult()
+		;
+	}
+
+    public function findLikeName($value)
+    {
+		return $this->createQueryBuilder('p')
+			->where('upper(p.name) LIKE upper(:name)')
+			->setParameter('name', '%' . $value . '%')
+			->getQuery()
+			->getResult()
+		;
+	}
+
     // /**
     //  * @return Plattforms[] Returns an array of Plattforms objects
     //  */

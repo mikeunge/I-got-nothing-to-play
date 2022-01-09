@@ -8,54 +8,66 @@
 		<a href="{{ path('homepage') }}">
 			<img src="{{ asset('/images/logo.png') }}" alt="LOGO" class="h-8 w-auto mr-2">
 		</a>
-		<form method="get">
+		<form method="get" name="search" class="flex">
 			<label class="relative block">
 				<span class="sr-only">Search</span>
 				<span class="absolute inset-y-0 left-0 flex items-center pl-2">
 					<div class="material-icons font-light text-gray-400 -mt-1">search</div>
 				</span>
-				<input class="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-purple-300 focus:ring-purple-500 focus:ring-1 sm:text-sm" placeholder="Search for games..." type="text" name="search"/>
+				<input id="searchFieldInput" class="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-purple-300 focus:ring-purple-500 focus:ring-1 sm:text-sm" placeholder="Search for games..." type="search" name="search"/>
 			</label>
-		</form>
-		<a class="btn" href="{{ path('games_new') }}">Add Game</a>
-	</div>
-
-	<div class="flex justify-start px-4 pt-4">
-		<div class="text-4xl">Your Library</div>
-		<button onclick="openModal();" class="pl-4 mt-4 text-gray-600 font-thin link">Import Games</button>
-	</div>
-
-	{# file-upload modal #}
-	<div class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto pt-20 h-full w-full" id="import-games">
-		<div class="flex justify-center mt-8">
-			<div class="max-w-2xl rounded-lg shadow-xl bg-gray-50">
-				<div class="m-4">
-					<div class="flex justify-between pb-2">
-						<label class="inline-block mb-2 text-gray-500">File Upload</label>
-						<button onclick="closeModal();" class="material-icons text-gray-500">close</button>
-					</div>
-					<div class="flex items-center justify-center w-full">
-						<label class="flex flex-col w-full h-32 border-4 border-purple-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
-							<div class="flex flex-col items-center justify-center pt-7">
-								<div class="material-icons text-gray-400 w-8 h-8 group-hover:text-gray-600">cloud_upload</div>
-								<p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">Drag file here or click me</p>
-							</div>
-							<input type="file" class="opacity-0" />
-						</label>
-					</div>
-				</div>
-				<div class="flex justify-center p-2">
-					<button onclick="uploadModal();" class="w-full px-4 py-2 text-white bg-purple-500 rounded shadow-xl">Upload</button>
+			<label id="filterField" class="relative ml-2 hidden">
+				<span class="sr-only">Search</span>
+				<span class="absolute inset-y-0 left-0 flex items-center pl-2">
+					<div class="material-icons font-light text-gray-400 -mt-1">search</div>
+				</span>
+				<input id="filterFieldInput" class="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-purple-300 focus:ring-purple-500 focus:ring-1 sm:text-sm" placeholder="Apply a filter..." type="search" name="filter"/>
+			</label>
+			<div class="ml-2">
+				<button class="px-4 py-1.5 border border-gray-300 rounded-md text-gray-400 hover:border-purple-500 hover:text-purple-500 transition-colors shadow-sm">Search</button>
+			</div>
+			<div class="px-2">
+				<button type="button" onclick="toggleHidden('dropdownMenu');" class="px-4 py-1.5 border border-gray-300 rounded-md text-gray-400 hover:border-purple-500 hover:text-purple-500 transition-colors shadow-sm inline-flex" type="button">Filter<span class="material-icons ml-2 mb-2 w-4 h-4">expand_more</span></button>
+				<div id="dropdownMenu" class="hidden absolute z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+					<ul>
+						{% for option in filterOptions %}
+						<li>
+							<button type="button" onclick="setSearchOption('{{ option }}');" class="flex w-full text-start py-2 px-4 text-sm text-white hover:bg-gray-100 hover:text-gray-700">{{ option|title }}</button>
+						</li>
+						{% endfor %}
+					</ul>
 				</div>
 			</div>
-		</div> 
+		</form>
+	</div>
+
+
+	<div class="flex justify-between">
+		<div class="flex justify-start px-4 pt-4">
+			<div class="text-4xl">Your Library</div>
+			<a href="{{ path('games_import') }}" class="pl-4 mt-4 text-gray-600 font-thin link">Import Games</a>
+		</div>
+		<div class="flex px-4 pt-6">
+			<a class="btn font-medium text-sm" href="{{ path('games_new') }}">Add Game</a>
+		</div>
 	</div>
 
 	<div class="pt-8">
-		{% if search %}
+		{% if searchString %}
 			<div class="flex justify-start pl-4 pb-2">
 				<a href="{{ path('games_index') }}" class="material-icons font-light link text-lg mt-0.5 pr-1">close</a>
-				<div class="text-lg">Search: <span class="text-gray-700 font-light">{{ searchString }}</span></div>
+				<div>
+					<div class="text-lg">Search: <span id="searchString" class="text-gray-700 font-light">{{ searchString }}</span></div>
+					{% if selectedFilter %}
+					<div class="flex">
+						<a href="{{ path('games_index', {'search': searchString}) }}" class="material-icons font-light link text-lg mt-0.5 pr-1">close</a>
+						<div class="text-lg">Filter: <span id="selectedFilter" class="text-gray-700 font-light">{{ selectedFilter }}</span></div>
+						{% if error %}
+							<span class="text-red-500 text-lg pl-8">ERROR: {{ error }}</span>
+						{% endif %}
+					</div>
+					{% endif %}
+				</div>
 			</div>
 		{% endif %}
 		{% if games %}	
@@ -92,7 +104,7 @@
 			<div class="flex flex-col text-center justify-center pt-28 md:pt-48">
 				<div class="text-2xl md:text-4xl">(つ◉益◉)つ</div>
 				<div class="text-3xl md:text-5xl pt-8">No records found</div>
-				{% if search %}
+				{% if searchString|length > 0 %}
 					<div class="md:text-2xl pt-2 font-light text-gray-600">Seems like there are no games with the title '{{ searchString }}'.</div>
 				{% else %}
 					<div class="md:text-2xl pt-2 font-light text-gray-600">Add some games and then come back, it looks great, trust me.</div>
@@ -138,7 +150,7 @@
 		});
 	}
 
-
+	// the import-games modal
     const modal = document.getElementById('import-games');
     const openModal = () => {
 		modal.style.display = 'block';
@@ -150,6 +162,58 @@
 	   console.log('handle-upload');
 	   closeModal();
     }
+
+	// toggle hidden elements
+	const toggleHidden = (item) => {
+		const elem = document.getElementById(item);
+		if (elem) {
+			elem.classList.toggle('hidden');
+		} else {
+			console.error(`${item} not found.`);
+		}
+	}
+
+	// position the cursor inside an input field
+	const posCursor = (elem) => {
+		let pos = elem.value.split(':')[0].length+1;
+		if (elem.setSelectionRange) {
+			elem.focus();
+			elem.setSelectionRange(pos, pos);
+		}
+	}
+
+	// manipulate the textfield to apply the filter option
+	const addSearchFilter = (filter) => {
+		const field = document.getElementById('filterFieldInput');
+		if (field) {
+			let text = field.value;
+			// check if a filter is already applied, if so, we take the last element from the array
+			// scrap everything before the actual search term and apply the new filter.
+			if (text.split(':').length > 1) {
+				text = text.split(':')[text.split(':').length-1];
+			}
+			field.value = `${filter}:${text}`;
+			posCursor(field);
+		} else {
+			console.error('Could not find search field');
+		}
+	}
+
+	let filterIsHidden = true;
+	const setSearchOption = (option) => {
+		if (filterIsHidden) {
+			toggleHidden('filterField');
+			filterIsHidden = false;
+		}
+		addSearchFilter(option);
+		toggleHidden('dropdownMenu');
+	}
+
+	const searchString = document.getElementById('searchString');
+	const searchField = document.getElementById('searchFieldInput');
+	if (searchString && searchField) {
+		searchFieldInput.value = searchString.textContent;
+	}
 
 	</script>
 

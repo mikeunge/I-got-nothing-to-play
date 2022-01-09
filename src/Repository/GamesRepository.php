@@ -19,11 +19,36 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
+	public function findAll()
+    {
+        return $this->findBy(array(), array('title' => 'ASC'));
+    }
+
     public function findByTitle($value)
     {
 		return $this->createQueryBuilder('g')
-			->where('g.title LIKE :title')
+			->where('upper(g.title) = upper(:title)')
+			->setParameter('title', $value)
+			->getQuery()
+			->getResult()
+		;
+	}
+
+    public function findLikeTitle($value)
+    {
+		return $this->createQueryBuilder('g')
+			->where('upper(g.title) LIKE upper(:title)')
 			->setParameter('title', '%' . $value . '%')
+			->getQuery()
+			->getResult()
+		;
+	}
+
+    public function findByDevelopers($value)
+    {
+		return $this->createQueryBuilder('g')
+			->where('g.developers LIKE :dev')
+			->setParameter('dev', '%' . $value . '%')
 			->getQuery()
 			->getResult()
 		;

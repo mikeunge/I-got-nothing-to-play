@@ -15,11 +15,13 @@
 	</div>
 	<div class="w-full px-3 mb-6 md:mb-8">
 		<a href="{{ path('genres_new') }}" class="link text-sm font-light ">Add Genre</a>
+		<a href="{{ path('genres_index') }}">
 		{{ form_row(form.genre, {
 				'attr': {'rows': 4, 'class': 'w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 selection:bg-blue-600 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'},
 				'label_attr': {'id': 'genre_title', 'class': 'block uppercase tracking-wide text-gray-700 text-xl font-bold mb-2'},
 			})
 		}}
+		</a>
 	</div>
 	<div class="w-full px-3 mb-6 md:mb-8">
 		<a href="{{ path('developers_new') }}" class="link text-sm font-light">Add Developer</a>

@@ -19,6 +19,26 @@ class GenresRepository extends ServiceEntityRepository
         parent::__construct($registry, Genres::class);
     }
 
+    public function findByName($value)
+    {
+		return $this->createQueryBuilder('g')
+			->where('upper(g.name) = upper(:name)')
+			->setParameter('name', $value)
+			->getQuery()
+			->getResult()
+		;
+	}
+
+    public function findLikeName($value)
+    {
+		return $this->createQueryBuilder('g')
+			->where('upper(g.name) LIKE upper(:name)')
+			->setParameter('name', '%' . $value . '%')
+			->getQuery()
+			->getResult()
+		;
+	}
+
     // /**
     //  * @return Genres[] Returns an array of Genres objects
     //  */
