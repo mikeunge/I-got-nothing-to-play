@@ -114,6 +114,7 @@ class GamesController extends AbstractController
 								if ($games->getImage() != $data[5]) {
 									$games->setImage($data[5]);
 								}
+								$game->setRating(1);
 								$entityManager->persist($games);
 								$entityManager->flush();
 							} else {	// create a new game
@@ -150,6 +151,7 @@ class GamesController extends AbstractController
 								$game->addGenre($genre);
 								$game->addPlattform($plattform);
 								$game->setImage($data[5]);
+								$game->setRating(1);
 							
 								// persist and flush the data
 								$entityManager->persist($game);

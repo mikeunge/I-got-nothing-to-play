@@ -33,6 +33,9 @@ class Games
     #[ORM\ManyToMany(targetEntity: Plattforms::class, inversedBy: 'games')]
     private $plattform;
 
+    #[ORM\Column(type: 'integer')]
+    private $rating;
+
     public function __construct()
     {
         $this->genre = new ArrayCollection();
@@ -40,9 +43,9 @@ class Games
     }
 
 	public function __toString()
-    {
-        return $this->title;
-    }
+             {
+                 return $this->title;
+             }
 
     public function getId(): ?int
     {
@@ -141,6 +144,18 @@ class Games
     public function removePlattform(Plattforms $plattform): self
     {
         $this->plattform->removeElement($plattform);
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }

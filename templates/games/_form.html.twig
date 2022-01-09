@@ -47,6 +47,14 @@
 			})
 		}}
 	</div>
+	<div class="w-full px-3 mb-6 md:mb-8">
+		{{ form_row(form.rating, {
+				'attr': {'class': 'w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none', 'min': '1', 'max': '5'},
+				'label_attr': {'class': 'block uppercase tracking-wide text-gray-700 text-xl font-bold mb-2'},
+				'label': 'Rating (between 1 and 5)'
+			})
+		}}
+	</div>
 	<div class="w-full flex justify-end">
 		<button class="btn" type="submit">{{ button_label|default('Save') }}</button>
 	</div>

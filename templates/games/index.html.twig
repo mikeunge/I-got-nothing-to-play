@@ -93,6 +93,13 @@
 								<a class="material-icons pr-2 link" href="{{ path('games_show', {'id': game.id}) }}">open_in_new</a>
 							</div>
 						</div>
+						{% for i in 1..5 %}
+							{% if game.rating >= loop.index %}
+								<span class="material-icons">star</span>
+							{% else %}
+								<span class="material-icons">star_border</span>
+							{% endif %}
+						{% endfor %}
 						<div class="game-description pt-2 pb-6 text-gray-600 font-light break-words">
 							{{ game.description }}
 						</div>

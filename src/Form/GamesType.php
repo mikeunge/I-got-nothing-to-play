@@ -18,6 +18,7 @@ class GamesType extends AbstractType
             ->add('genre')
             ->add('developer')
             ->add('plattform')
+			->add('rating')
         ;
     }
 
